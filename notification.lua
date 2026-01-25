@@ -34,6 +34,20 @@ core.register_on_joinplayer(function(player)
 			return
 		end
 		
+		local notification_sent = false
+		
+		-- Check if player has 0 HP (stuck in death)
+		local hp = player:get_hp()
+		if hp == 0 then
+			local reason = S("You have 0 HP.")
+			send_rescue_notification(player, reason)
+			notification_sent = true
+			
+			-- Log for server admin
+			core.log("warning", "[safe_yourself] Player " .. player_name .. 
+				" joined with 0 HP")
+		end
+		
 		-- Get player information including protocol version
 		local info = core.get_player_information(player_name)
 		if not info then
@@ -45,10 +59,12 @@ core.register_on_joinplayer(function(player)
 		if info.protocol_version and info.protocol_version < version.proto_max then
 			local player_client = table.keyof(core.protocol_versions, info.protocol_version)
 			local server_version= table.keyof(core.protocol_versions, version.proto_max)
-			local reason = S("You are using an old client v@1, clients of v@2+ are recommended",
-				player_client, server_version)
-			send_rescue_notification(player, reason)
-			
+			if not notification_sent then
+				local reason = S("You are using an old client v@1, clients of v@2+ are recommended",
+					player_client, server_version)
+				send_rescue_notification(player, reason)
+			end
+
 			-- Log for server admin
 			core.log("warning", "[safe_yourself] Player " .. player_name .. 
 				" connected with old protocol version " .. info.protocol_version)

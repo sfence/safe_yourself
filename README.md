@@ -5,11 +5,14 @@ This mod provides rescue commands for players who get stuck in death loops, whic
 ## Features
 
 - **Automatic detection** of players using old clients based on protocol version
+- **0 HP detection** - notifies players who join with 0 HP (can happen than respawn formspec is hidden by game formspec)
 - **Configurable rescue commands** to help players escape death loops:
   - Respawn command - forces player respawn
   - One HP command - sets player HP to 1 if they have 0 HP
 - **Customizable notifications** with configurable colors and timing
+- **Smart notification system** - avoids sending duplicate notifications (0 HP takes priority over old client warning)
 - **Flexible configuration** - command names, colors, delays, and thresholds can be adjusted via settings
+- **Server logging** - administrators are informed about players with old clients or 0 HP on join
 
 ## Commands
 
