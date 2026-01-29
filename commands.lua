@@ -13,8 +13,13 @@ core.register_chatcommand(settings.respawn_command, {
 			return false, S("Player not found")
 		end
 		
-		player:respawn()
-		return true, S("You have been respawned")
+		local hp = player:get_hp()
+		if hp == 0 then
+			player:respawn()
+			return true, S("You have been respawned")
+		else
+			return false, S("You already have HP: @1", hp)
+		end
 	end,
 })
 
