@@ -4,6 +4,7 @@
 safe_yourself.respawn_command (Respawn command name) string safe_yourself_respawn
 
 # Name of the one HP command
+# Use epthy string to disallow command
 safe_yourself.one_hp_command (One HP command name) string safe_yourself_one_hp
 
 # Enable notifications for players with old clients
